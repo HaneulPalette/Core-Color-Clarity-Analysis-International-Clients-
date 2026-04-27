@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Core Color Clarity - International</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #fafafa;
+  text-align: center;
+  padding: 20px;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+}
+
+.logo {
+  width: 100px;
+  border-radius: 50%;
+}
+
+input[type="file"] {
+  margin-top: 15px;
+}
+
+button {
+  padding: 12px 20px;
+  background: black;
+  color: white;
+  border: none;
+  margin-top: 15px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.result {
+  display: none;
+  margin-top: 20px;
+  background: #f5f5f5;
+  padding: 15px;
+  text-align: left;
+  white-space: pre-line;
+  border-radius: 8px;
+}
+
+#paymentSection {
+  display: none;
+  margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- LOGO -->
+<img src="logo.png" class="logo" alt="Logo">
+
+<h1>🌿 Core Color Clarity (International)</h1>
+<p>A refined understanding of your natural color direction.</p>
+
+<!-- STEP 1: IMAGE UPLOAD -->
+<h3>Upload Your Photo</h3>
+<input type="file" id="imageInput" accept="image/*">
+
+<br>
+<button onclick="generatePreview()">Get Preview</button>
+
+<!-- STEP 2: PREVIEW -->
+<div class="result" id="previewBox"></div>
+
+<!-- STEP 3: PAYMENT -->
+<div id="paymentSection">
+  <h3>Unlock Full Report – $9.99</h3>
+  <p>Scan the PayPal QR code and complete payment</p>
+
+  <!-- PAYPAL QR -->
+  <img src="paypal-qr.png" width="200" alt="PayPal QR Code">
+
+  <p style="margin-top:10px;">
+  After payment, submit proof using the form below
+  </p>
+
+  <!-- GOOGLE FORM -->
+  <a href="https://forms.gle/X5q31CnBjPVBvDjs9" target="_blank">
+    <button>Submit Payment Proof</button>
+  </a>
+</div>
+
+</div>
+
+<script>
+
+function generatePreview(){
+
+  const file = document.getElementById("imageInput").files[0];
+
+  if(!file){
+    alert("Please upload your image first");
+    return;
+  }
+
+  // 🔥 PREMIUM PREVIEW (HIGH-VALUE INSIGHTS)
+  const preview = `
+PREVIEW RESULT
+
+Season Classification: Soft Autumn
+Undertone Profile: Warm-Neutral
+
+Dominant Color Harmony:
+Muted earthy tones with soft warmth enhance your natural features and create a balanced, refined appearance.
+
+(Full report includes complete personalized palette, contrast level, styling direction, and wardrobe guidance)
+`;
+
+  document.getElementById("previewBox").innerText = preview;
+  document.getElementById("previewBox").style.display = "block";
+
+  document.getElementById("paymentSection").style.display = "block";
+}
+
+</script>
+
+</body>
+</html>
