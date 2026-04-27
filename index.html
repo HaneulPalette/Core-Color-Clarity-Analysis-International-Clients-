@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Core Color Clarity - International</title>
+<title>Core Color Clarity</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
 body {
@@ -23,10 +25,6 @@ body {
 .logo {
   width: 100px;
   border-radius: 50%;
-}
-
-input[type="file"] {
-  margin-top: 15px;
 }
 
 button {
@@ -51,7 +49,18 @@ button {
 
 #paymentSection {
   display: none;
+  margin-top: 25px;
+}
+
+#unlockSection {
+  display: none;
   margin-top: 20px;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 </style>
 </head>
@@ -60,26 +69,27 @@ button {
 
 <div class="container">
 
-<!-- LOGO -->
-<img src="logo.png" class="logo" alt="Logo">
+<img src="logo.png" class="logo">
 
-<h1>🌿 Core Color Clarity (International)</h1>
+<h1>🌿 Core Color Clarity</h1>
 <p>A refined understanding of your natural color direction.</p>
 
-<!-- STEP 1: IMAGE UPLOAD -->
+<!-- STEP 1 -->
 <h3>Upload Your Photo</h3>
 <input type="file" id="imageInput" accept="image/*">
 
 <br>
 <button onclick="generatePreview()">Get Preview</button>
 
-<!-- STEP 2: PREVIEW -->
+<!-- STEP 2 -->
 <div class="result" id="previewBox"></div>
 
-<!-- STEP 3: PAYMENT -->
+<!-- STEP 3 -->
 <div id="paymentSection">
-  <h3>Unlock Full Report – $9.99</h3>
-  <p>Scan the PayPal QR code and complete payment</p>
+
+  <div class="price">Unlock Full Report – $9.99</div>
+
+  <p>Scan PayPal QR code and complete payment</p>
 
   <!-- PAYPAL QR -->
   <img src="paypal-qr.png" width="200" alt="PayPal QR Code">
@@ -88,15 +98,27 @@ button {
   After payment, submit proof using the form below
   </p>
 
-  <!-- GOOGLE FORM -->
-  <a href="https://forms.gle/X5q31CnBjPVBvDjs9" target="_blank">
+  <a href="https://forms.gle/mLCddjQmVrq3T65HA" target="_blank">
     <button>Submit Payment Proof</button>
   </a>
+
+  <br>
+
+  <button onclick="unlockReport()">I Have Submitted the Form</button>
+
+</div>
+
+<!-- STEP 4 -->
+<div id="unlockSection">
+  <h3>Your Report is Ready</h3>
+  <button onclick="downloadPDF()">Download Full Report (PDF)</button>
 </div>
 
 </div>
 
 <script>
+
+let fullReport = "";
 
 function generatePreview(){
 
@@ -107,7 +129,7 @@ function generatePreview(){
     return;
   }
 
-  // 🔥 PREMIUM PREVIEW (HIGH-VALUE INSIGHTS)
+  // 🔥 PREMIUM PREVIEW (3 FEATURES)
   const preview = `
 PREVIEW RESULT
 
@@ -115,15 +137,67 @@ Season Classification: Soft Autumn
 Undertone Profile: Warm-Neutral
 
 Dominant Color Harmony:
-Muted earthy tones with soft warmth enhance your natural features and create a balanced, refined appearance.
+Muted earthy tones enhance your natural features and create a balanced, refined appearance.
 
-(Full report includes complete personalized palette, contrast level, styling direction, and wardrobe guidance)
+(Full report includes complete palette, contrast level, styling and wardrobe guidance)
 `;
 
   document.getElementById("previewBox").innerText = preview;
   document.getElementById("previewBox").style.display = "block";
 
   document.getElementById("paymentSection").style.display = "block";
+
+  // FULL REPORT DATA
+  fullReport = `
+HANEUL PALETTE
+
+CORE COLOR CLARITY REPORT
+
+Season: Soft Autumn
+Undertone: Warm-Neutral
+
+Best Colors:
+Olive, Beige, Rust, Camel, Soft Gold
+
+Avoid:
+Cool tones, Neon shades
+
+Style Direction:
+Soft warm tones enhance your natural harmony and elegance.
+
+Wardrobe Guidance:
+Focus on earthy palettes and low contrast styling.
+
+Thank you for choosing Haneul Palette.
+`;
+}
+
+function unlockReport(){
+  alert("Your submission has been received. Report unlocked.");
+  document.getElementById("unlockSection").style.display = "block";
+}
+
+function downloadPDF(){
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  const img = new Image();
+  img.src = "logo.png";
+
+  img.onload = function(){
+
+    doc.addImage(img, "PNG", 85, 10, 40, 40);
+
+    doc.setFontSize(14);
+    doc.text("Core Color Clarity Report", 50, 60);
+
+    doc.setFontSize(11);
+    const lines = doc.splitTextToSize(fullReport, 180);
+    doc.text(lines, 10, 75);
+
+    doc.save("Core_Color_Clarity_Report.pdf");
+  }
 }
 
 </script>
